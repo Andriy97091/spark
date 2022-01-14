@@ -10,15 +10,15 @@ df_motels = spark.table("default.motels_txt")
 
 #1.Erroneous records
 
-# df_error = df_bids.select(col("BidDate"), col("HU")).where(col("HU").like("ERROR%"))
-# df_error_hour = df_error.withColumn('BidDate',  hour(to_timestamp(col("BidDate"), "HH-dd-MM-yyyy")))
-# df_error_count = df_error_hour.groupBy(col("BidDate").alias("Hour"), col("HU").alias("Type of Error")) \
-#                               .agg(count("HU").alias("Corrupted records"))
-# df_error_count.show(500)
+df_error = df_bids.select(col("BidDate"), col("HU")).where(col("HU").like("ERROR%"))
+df_error_hour = df_error.withColumn('BidDate',  hour(to_timestamp(col("BidDate"), "HH-dd-MM-yyyy")))
+df_error_count = df_error_hour.groupBy(col("BidDate").alias("Hour"), col("HU").alias("Type of Error")) \
+                              .agg(count("HU").alias("Corrupted records"))
+df_error_count.show(500)
 
 #############################################################################################################
 #3. Dealing with bids
-df_counry = df_bids_result.select(col("MotelID"), \
+df_counry = df_bids.select(col("MotelID"), \
                                    col("BidDate"), \
                                    col("US"), \
                                    col("CA"), \
